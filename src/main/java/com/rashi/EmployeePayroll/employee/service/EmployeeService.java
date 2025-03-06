@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeService {
+public class EmployeeService { //UC4 added service layer
     @Autowired
     private EmployeeRepository repository;
 
@@ -32,6 +32,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
+
         repository.deleteById(id);
     }
 }

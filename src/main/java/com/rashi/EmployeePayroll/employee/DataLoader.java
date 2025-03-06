@@ -17,7 +17,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Adding sample employees
-        employeeRepository.save(new Employee(null, "Alice", "HR", 50000));
-        employeeRepository.save(new Employee(null, "Bob", "IT", 70000));
+        employeeRepository.save(new Employee("Rashi",50000));
+        employeeRepository.save(new Employee("Shantanu",70000));
     }
 }

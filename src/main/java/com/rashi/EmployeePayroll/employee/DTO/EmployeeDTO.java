@@ -1,26 +1,17 @@
-package com.rashi.EmployeePayroll.employee.model;
+package com.rashi.EmployeePayroll.employee.DTO;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EmployeeDTO {
     private String name;
     private double salary;
 
     // Constructors
-    public Employee() {}
-    public Employee(String name, double salary) {
+    public EmployeeDTO() {}
+    public EmployeeDTO(String name, double salary) {
         this.name = name;
         this.salary = salary;
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

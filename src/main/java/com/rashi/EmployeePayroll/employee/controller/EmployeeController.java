@@ -1,15 +1,6 @@
 package com.rashi.EmployeePayroll.employee.controller;
-
-
-import com.rashi.EmployeePayroll.employee.DTO.EmployeeDTO;
 import com.rashi.EmployeePayroll.employee.model.Employee;
-import com.rashi.EmployeePayroll.employee.repository.EmployeeRepository;
 import com.rashi.EmployeePayroll.employee.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,24 +15,24 @@ public class EmployeeController {
     private EmployeeService service;
 
     @GetMapping
-    public List<EmployeeDTO> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return service.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
-        EmployeeDTO employeeDTO = service.getEmployeeById(id);
-        return employeeDTO != null ? ResponseEntity.ok(employeeDTO) : ResponseEntity.notFound().build();
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = service.getEmployeeById(id);
+        return employee != null ? ResponseEntity.ok(employee) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return service.saveEmployee(employeeDTO);
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return service.saveEmployee(employee);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-        service.deleteEmployee(id);
-        return ResponseEntity.noContent().build();
+        boolean deleted = service.deleteEmployee(id);
+        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

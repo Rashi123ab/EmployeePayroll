@@ -1,38 +1,40 @@
 package com.rashi.EmployeePayroll.employee.service;
 import com.rashi.EmployeePayroll.employee.model.Employee;
-import com.rashi.EmployeePayroll.employee.DTO.EmployeeDTO;
-import com.rashi.EmployeePayroll.employee.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
-public class EmployeeService { //UC4 added service layer
-    @Autowired
-    private EmployeeRepository repository;
+public class EmployeeService {
 
-    public List<EmployeeDTO> getAllEmployees() {
-        return repository.findAll()
-                .stream()
-                .map(emp -> new EmployeeDTO(emp.getName(), emp.getSalary()))
-                .collect(Collectors.toList());
+    private final List<Employee> employeeList = new ArrayList<>();
+    private long nextId = 1;  // Simulates an auto-increment ID
+
+    public List<Employee> getAllEmployees() {
+        System.out.println("Employees List: " + employeeList);
+        return employeeList;
     }
 
-    public EmployeeDTO getEmployeeById(Long id) {
-        Employee emp = repository.findById(id).orElse(null);
-        return emp != null ? new EmployeeDTO(emp.getName(), emp.getSalary()) : null;
+    public Employee getEmployeeById(Long id) {
+        return employeeList.stream()
+                .filter(emp -> emp.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
-    public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee(employeeDTO.getName(), employeeDTO.getSalary());
-        Employee savedEmployee = repository.save(employee);
-        return new EmployeeDTO(savedEmployee.getName(), savedEmployee.getSalary());
+    public Employee saveEmployee(Employee employee) {
+        employee.setId(nextId++);  // Assign a unique ID
+        employeeList.add(employee);
+        return employee;
     }
 
-    public void deleteEmployee(Long id) {
+    public boolean deleteEmployee(Long id) {
+        Optional<Employee> employeeToRemove = employeeList.stream()
+                .filter(emp -> emp.getId().equals(id))
+                .findFirst();
 
-        repository.deleteById(id);
+        employeeToRemove.ifPresent(employeeList::remove);
+        return employeeToRemove.isPresent();
     }
 }

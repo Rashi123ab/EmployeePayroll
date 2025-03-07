@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component  // Marks this as a startup component
 public class DataLoader implements CommandLineRunner {
 
-    private final EmployeeRepository employeeRepository;
+    EmployeeRepository employeeRepository;
 
     public DataLoader(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;

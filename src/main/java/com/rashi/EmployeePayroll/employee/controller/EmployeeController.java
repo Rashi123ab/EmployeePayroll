@@ -1,6 +1,7 @@
 package com.rashi.EmployeePayroll.employee.controller;
 
 import com.rashi.EmployeePayroll.employee.DTO.EmployeeDTO;
+import com.rashi.EmployeePayroll.employee.model.Employee;
 import com.rashi.EmployeePayroll.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
-        EmployeeDTO employeeDTO = service.getEmployeeById(id);
-        return employeeDTO != null ? ResponseEntity.ok(employeeDTO) : ResponseEntity.notFound().build();
+
+    public Employee getEmployeeById(@PathVariable Long id) {
+        return service.getEmployeeById(id);
     }
 
     @PostMapping

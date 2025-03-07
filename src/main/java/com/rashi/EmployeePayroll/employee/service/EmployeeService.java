@@ -1,6 +1,7 @@
 package com.rashi.EmployeePayroll.employee.service;
 
 import com.rashi.EmployeePayroll.employee.DTO.EmployeeDTO;
+import com.rashi.EmployeePayroll.employee.exception.EmployeeNotFoundException;
 import com.rashi.EmployeePayroll.employee.model.Employee;
 import com.rashi.EmployeePayroll.employee.repository.EmployeeRepository;
 import jakarta.validation.Valid;
@@ -24,10 +25,9 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public EmployeeDTO getEmployeeById(Long id) {
+    public Employee getEmployeeById(Long id) {
         return repository.findById(id)
-                .map(emp -> new EmployeeDTO(emp.getName(), emp.getSalary()))
-                .orElse(null);
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
     }
 
     public EmployeeDTO saveEmployee(@Valid EmployeeDTO employeeDTO) {
